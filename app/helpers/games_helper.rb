@@ -1,10 +1,10 @@
 module GamesHelper
   def current_game
-    @current_game ||= Game.find(params[:game_id])
+    @current_game ||= Game.find(params[:id])
   end
 
   def game_day
-    params[:game_day] || Date.current
+    params[:game_day]&.to_date || Date.current
   end
 
   def date_range
@@ -13,5 +13,17 @@ module GamesHelper
 
   def todays_games
     @todays_games ||= Game.where(played_at: game_day)
+  end
+
+  def filtered_games
+    favorite_games || todays_games
+  end
+
+  def favorite_games
+    todays_games.where(favorite: true) if params[:watching] == '1'
+  end
+
+  def follow_text(game = current_game)
+    game.favorite? ? 'Unfollow' : 'Follow'
   end
 end

@@ -9,6 +9,7 @@ class ImportGames
     SportsRadar.games(game_day)['games'].each do |game|
       Game.find_or_create_by!(
         played_at: game_day,
+        scheduled_at: game['scheduled'].to_time.in_time_zone.strftime("%l:%M%p"),
         away_team: find_or_create_team(game['away']),
         home_team: find_or_create_team(game['home'])
       )
@@ -19,8 +20,8 @@ class ImportGames
 
   def find_or_create_team(team_data)
     Team.find_or_create_by(
-      name: team_data['name'],
-      sports_radar_id: team_data['id']
+      id: team_data['id'],
+      name: team_data['name']
     )
   end
 end

@@ -1,9 +1,11 @@
 class Team
   include Mongoid::Document
   field :name
-  field :sports_radar_id
-  field :sports_reference_id
   embeds_many :rankings, class_name: Ranking
+  embeds_many :players, class_name: Player
   validates :name, presence: true
-  validates :sports_radar_id, presence: true
+
+  def rankings_for(game)
+    rankings.where(game_id: game.id).first
+  end
 end

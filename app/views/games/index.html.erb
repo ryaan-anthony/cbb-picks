@@ -1,5 +1,6 @@
-<%= form_with(url: games_import_path) do %>
+<%= form_with(url: filter_games_path) do %>
     <%= select_tag(:game_day, options_for_select(date_range, game_day)) %>
+    <%= tag :input, name: :watching, type: :checkbox, value: 1, checked: params[:watching].presence %>
     <%= submit_tag('View') %>
 <% end %>
 
@@ -10,15 +11,16 @@
 <div>Games: <%= todays_games.count %></div>
 
 <ul>
-  <% todays_games.each do |game| %>
+  <% filtered_games.each do |game| %>
       <li>
-        [<%= link_to 'matchup', game_path(game) %>]
+        [<%= link_to 'view', game_path(game) %>]
         |
         <%= game.away_team.name %>
-        [<%= link_to 'view', team_path(game.away_team) %>]
         vs
         <%= game.home_team.name %>
-        [<%= link_to 'view', team_path(game.home_team) %>]
+        <%= form_with(url: favorite_game_path(game), html: { style: 'display:inline-block' }) do %>
+            <%= submit_tag follow_text(game), name: :favorite %>
+        <% end %>
       </li>
   <% end %>
 </ul>
