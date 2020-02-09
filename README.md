@@ -16,6 +16,13 @@ bundle exec rake webpacker:install
 bundle exec rails credentials:edit
 ```
 
+Example config:
+```
+sports_radar:
+  api_key: xxxxxxx
+  host: https://api.sportradar.us/
+```
+
 ### Run the server:
 ```
 bundle exec rails s

@@ -1,0 +1,24 @@
+<%= form_with(url: games_import_path) do %>
+    <%= select_tag(:game_day, options_for_select(date_range, game_day)) %>
+    <%= submit_tag('View') %>
+<% end %>
+
+<hr />
+
+<h3>Games for <%= game_day %>:</h3>
+
+<div>Games: <%= todays_games.count %></div>
+
+<ul>
+  <% todays_games.each do |game| %>
+      <li>
+        [<%= link_to 'matchup', game_path(game) %>]
+        |
+        <%= game.away_team.name %>
+        [<%= link_to 'view', team_path(game.away_team) %>]
+        vs
+        <%= game.home_team.name %>
+        [<%= link_to 'view', team_path(game.home_team) %>]
+      </li>
+  <% end %>
+</ul>

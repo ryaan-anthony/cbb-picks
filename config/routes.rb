@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get '/', to: 'games#index', as: 'root'
+  post 'games/import'
+  resources :teams, only: [:show]
+  resources :games, only: [:show]
 end
