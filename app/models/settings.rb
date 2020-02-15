@@ -1,0 +1,6 @@
+module Settings
+  MINUTES_PLAYED = 17.0
+  THREE_POINT_AVERAGE = 0.4
+  TWO_POINT_AVERAGE = 0.5
+  FOUL_AVERAGE = 0.7
+end

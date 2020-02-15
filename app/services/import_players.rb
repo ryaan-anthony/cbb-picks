@@ -9,6 +9,7 @@ class ImportPlayers
     team.players.destroy_all
     SportsRadar.team(team.id)['players'].each do |player|
       team.players.create(
+        name: player['full_name'],
         minutes_played: player['average']['minutes'],
         points_per_game: player['average']['points'],
         field_goal_percent: player['total']['field_goals_pct'],

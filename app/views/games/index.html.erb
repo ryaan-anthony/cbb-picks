@@ -18,8 +18,8 @@
         <%= game.away_team.name %>
         vs
         <%= game.home_team.name %>
-        <%= form_with(url: favorite_game_path(game), html: { style: 'display:inline-block' }) do %>
-            <%= submit_tag follow_text(game), name: :favorite %>
+        <%= form_with(url: action_game_path(game), html: { style: 'display:inline-block' }) do %>
+            <%= submit_tag follow_text(game), name: :commit %>
         <% end %>
       </li>
   <% end %>

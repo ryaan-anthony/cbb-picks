@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :games, only: [:show] do
     member do
-      post :favorite
+      post :action
     end
 
     collection do
