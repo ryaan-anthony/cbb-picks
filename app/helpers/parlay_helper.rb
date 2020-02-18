@@ -1,37 +1,49 @@
-module GamesHelper
-  def current_game
-    @current_game ||= Game.find(params[:id])
+module ParlayHelper
+  def parlays
+    record = {
+      middles: 0,
+      bottoms: 0,
+      bets: []
+    }
+
+    @parlay.picks.combination(@parlay.num_teams).to_a.shuffle.each do |parlay|
+      middle_matches = select_matches(parlay, @parlay.middle_teams)
+      bottom_matches = select_matches(parlay, @parlay.bottom_teams)
+
+      next if count_occurrences(middle_matches, record[:bets]).any? { |count| count >= @parlay.middle_occurrences }
+      next if count_occurrences(bottom_matches, record[:bets]).any? { |count| count >= @parlay.bottom_occurrences }
+      next if count_occurrences(parlay, record[:bets]).any? { |count| count >= @parlay.max_occurrences }
+
+      # Select this parlay
+      record[:middles] += middle_matches.count
+      record[:bottoms] += bottom_matches.count
+      record[:bets] << parlay
+    end
+
+    record[:bets]
   end
 
-  def game_day
-    params[:game_day]&.to_date || Date.current
+  def pick_occurrences
+    (@parlay.top_teams.count * @parlay.max_occurrences) +
+      (@parlay.middle_teams.count * @parlay.middle_occurrences) +
+      (@parlay.bottom_teams.count * @parlay.bottom_occurrences)
   end
 
-  def date_range
-    (2.days.ago.to_date)..(2.days.from_now.to_date)
+  private
+
+  # @return [Array<Symbol>]
+  def select_matches(parlay, picks)
+    parlay.select do |team|
+      picks.include? team
+    end
   end
 
-  def todays_games
-    @todays_games ||= Game.where(played_at: game_day)
-  end
-
-  def filtered_games
-    favorite_games || todays_games
-  end
-
-  def favorite_games
-    todays_games.where(favorite: true) if params[:watching] == '1'
-  end
-
-  def follow_text(game = current_game)
-    game.favorite? ? 'Unfollow' : 'Follow'
-  end
-
-  def refresh_text
-    'Refresh'
-  end
-
-  def update_text
-    'Update'
+  # @param [Array<Symbol>] parlay
+  # @param [Array<Array<Symbol>>] bets
+  # @return [Array<Integer>]
+  def count_occurrences(parlay, bets)
+    parlay.map do |team|
+      bets.count { |bet| bet.include? team }
+    end
   end
 end

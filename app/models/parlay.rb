@@ -1,14 +1,14 @@
-class Game
+class Parlay
   include Mongoid::Document
-  field :favorite, type: Boolean, default: false
-  field :played_at, type: Date
-  field :scheduled_at
-  belongs_to :away_team, class_name: Team
-  belongs_to :home_team, class_name: Team
-  validates :away_team, presence: true
-  validates :home_team, presence: true
+  field :num_teams, type: Integer, default: 2
+  field :max_occurrences, type: Integer, default: 3
+  field :middle_occurrences, type: Integer, default: 2
+  field :bottom_occurrences, type: Integer, default: 1
+  field :top_teams, type: Array, default: []
+  field :middle_teams, type: Array, default: []
+  field :bottom_teams, type: Array, default: []
 
-  def teams
-    [away_team, home_team]
+  def picks
+    top_teams + middle_teams + bottom_teams
   end
 end

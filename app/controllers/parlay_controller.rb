@@ -1,36 +1,27 @@
-class GamesController < ApplicationController
-  include GamesHelper
-  helper :games
+class ParlayController < ApplicationController
+  before_action :fetch_parlay
+  helper :parlay
 
   def index
-    ImportGames.new(game_day).call if todays_games.count.zero?
   end
 
-  def filter
-    redirect_to root_path(game_day: game_day, watching: params[:watching])
-  end
-
-  def show
-  end
-
-  def action
-    if params[:commit] == follow_text
-      current_game.update(favorite: !current_game.favorite?)
-    elsif params[:commit] == update_text
-      CommitEligibility.new(params[:eligibility]).call
-      GenerateRankings.new(current_game).call
-    elsif params[:commit] == refresh_text
-      refresh_player_stats
-      GenerateRankings.new(current_game).call
-    end
-    redirect_back fallback_location: game_path(current_game)
+  def create
+    @parlay.update(
+      num_teams:          params.require(:num_teams),
+      top_teams:          params.require(:top_teams).split("\n"),
+      max_occurrences:    params.require(:max_occurrences),
+      middle_teams:       params.require(:middle_teams).split("\n"),
+      middle_occurrences: params.require(:middle_occurrences),
+      bottom_teams:       params.require(:bottom_teams).split("\n"),
+      bottom_occurrences: params.require(:bottom_occurrences)
+    )
+    redirect_to parlay_index_path
   end
 
   private
 
-  def refresh_player_stats
-    current_game.teams.each do |team|
-      ImportPlayers.new(team).call
-    end
+  def fetch_parlay
+    @parlay = Parlay.first_or_initialize
   end
 end
+

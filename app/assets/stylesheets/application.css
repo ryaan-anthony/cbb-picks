@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+label{
+    width: 200px;
+    display: inline-block;
+}
+input[type="text"]{
+    width: 50px;
+}
+textarea{
+    width: 254px;
+    height: 200px
+}
+.half-page{
+    float: left;
+    width: 300px;
+    display:inline-block;
+}
