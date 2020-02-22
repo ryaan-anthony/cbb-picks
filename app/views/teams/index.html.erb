@@ -1,0 +1,15 @@
+<%= form_with(url: refresh_teams_path) do %>
+    <%= submit_tag('Refresh') %>
+<% end %>
+
+<hr />
+
+<h3>Teams:</h3>
+
+<ul>
+  <% @teams.each do |team| %>
+      <li>
+        <%= team.name %>
+      </li>
+  <% end %>
+</ul>
