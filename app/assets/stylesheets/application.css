@@ -24,8 +24,21 @@ textarea{
     width: 254px;
     height: 200px
 }
-.half-page{
+.left-side{
     float: left;
     width: 300px;
     display:inline-block;
+}
+.right-side{
+    float: left;
+    width: 600px;
+    display:inline-block;
+}
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
 }

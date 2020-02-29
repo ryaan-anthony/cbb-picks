@@ -1,7 +1,7 @@
 <%= form_with(url: parlay_index_path) do %>
   <%= submit_tag %>
   <hr />
-  <dl class="half-page">
+  <dl class="left-side">
     <dd>
       <h3>Weighted Round Robin</h3>
     </dd>
@@ -31,13 +31,21 @@
       <%= text_field_tag :bottom_occurrences, nil, value: @parlay.bottom_occurrences %>
     </dd>
   </dl>
-  <dl class="half-page">
+  <dl class="right-side">
     <dd>
       <h3>Results:</h3>
       <p><%= "Max bets: #{(pick_occurrences / @parlay.num_teams).to_i}" %></p>
     </dd>
-    <% parlays.each do |parlay| %>
-      <dd><%= parlay.join(', ') %></dd>
-    <% end %>
+    <dd>
+      <table>
+        <% parlays.each do |parlay| %>
+            <tr>
+              <% parlay.each do |team| %>
+                <td><%= team %></td>
+              <% end %>
+            </tr>
+        <% end %>
+      </table>
+    </dd>
   </dl>
 <% end %>
