@@ -1,3 +1,5 @@
+<%= render 'shared/nav' %>
+
 <%= form_with(url: refresh_teams_path) do %>
     <%= submit_tag('Refresh') %>
 <% end %>
@@ -6,10 +8,20 @@
 
 <h3>Teams:</h3>
 
-<ul>
+<table>
   <% @teams.each do |team| %>
-      <li>
-        <%= team.name %>
-      </li>
+      <tr>
+        <td><%= team.last_offensive_score %></td>
+        <td><%= team.last_defensive_score %></td>
+        <td><%= team.name %></td>
+        <td>
+          <%= link_to 'Last Game', last_game_team_path(team) %>
+        </td>
+        <td>
+          <%= form_with(url: team_path(team), method: :patch) do %>
+              <%= submit_tag follow_text(team), name: :commit %>
+          <% end %>
+        </td>
+      </tr>
   <% end %>
-</ul>
+</table>

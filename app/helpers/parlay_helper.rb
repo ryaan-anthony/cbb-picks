@@ -1,32 +1,32 @@
 module ParlayHelper
   def parlays
-    record = {
-      middles: 0,
-      bottoms: 0,
-      bets: []
-    }
-
-    @parlay.picks.combination(@parlay.num_teams).to_a.shuffle.each do |parlay|
+    @parlay.picks.combination(@parlay.num_teams).to_a.shuffle.each_with_object([]) do |parlay, memo|
       middle_matches = select_matches(parlay, @parlay.middle_teams)
       bottom_matches = select_matches(parlay, @parlay.bottom_teams)
 
-      next if count_occurrences(middle_matches, record[:bets]).any? { |count| count >= @parlay.middle_occurrences }
-      next if count_occurrences(bottom_matches, record[:bets]).any? { |count| count >= @parlay.bottom_occurrences }
-      next if count_occurrences(parlay, record[:bets]).any? { |count| count >= @parlay.max_occurrences }
+      next if count_occurrences(middle_matches, memo).any? { |count| count >= @parlay.middle_occurrences }
+      next if count_occurrences(bottom_matches, memo).any? { |count| count >= @parlay.bottom_occurrences }
+      next if count_occurrences(parlay, memo).any? { |count| count >= @parlay.max_occurrences }
 
       # Select this parlay
-      record[:middles] += middle_matches.count
-      record[:bottoms] += bottom_matches.count
-      record[:bets] << parlay
+      memo << parlay
     end
-
-    record[:bets]
   end
 
   def pick_occurrences
     (@parlay.top_teams.count * @parlay.max_occurrences) +
       (@parlay.middle_teams.count * @parlay.middle_occurrences) +
       (@parlay.bottom_teams.count * @parlay.bottom_occurrences)
+  end
+
+  def weight_class(team)
+    if @parlay.top_teams.include? team
+      'top_teams'
+    elsif @parlay.middle_teams.include? team
+      'middle_teams'
+    else
+      'bottom_teams'
+    end
   end
 
   private

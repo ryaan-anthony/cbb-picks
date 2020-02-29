@@ -1,3 +1,5 @@
+<%= render 'shared/nav' %>
+
 <%= form_with(url: filter_games_path) do %>
     <%= select_tag(:game_day, options_for_select(date_range, game_day)) %>
     <%= tag :input, name: :watching, type: :checkbox, value: 1, checked: params[:watching].presence %>
@@ -10,17 +12,20 @@
 
 <div>Games: <%= todays_games.count %></div>
 
-<ul>
+<table>
   <% filtered_games.each do |game| %>
-      <li>
-        [<%= link_to 'view', game_path(game) %>]
-        |
-        <%= game.away_team.name %>
-        vs
-        <%= game.home_team.name %>
-        <%= form_with(url: action_game_path(game), html: { style: 'display:inline-block' }) do %>
-            <%= submit_tag follow_text(game), name: :commit %>
-        <% end %>
-      </li>
+      <tr>
+        <td><%= link_to 'view', game_path(game) %></td>
+        <td>
+          <%= game.away_team.name %>
+          vs
+          <%= game.home_team.name %>
+        </td>
+        <td>
+          <%= form_with(url: action_game_path(game), html: { style: 'display:inline-block' }) do %>
+              <%= submit_tag follow_text(game), name: :commit %>
+          <% end %>
+        </td>
+      </tr>
   <% end %>
-</ul>
+</table>

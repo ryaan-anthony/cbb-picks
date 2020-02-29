@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  include DictionaryHelper
+  helper :dictionary
   include GamesHelper
   helper :games
 
@@ -14,7 +16,7 @@ class GamesController < ApplicationController
   end
 
   def action
-    if params[:commit] == follow_text
+    if params[:commit] == follow_text(current_game)
       current_game.update(favorite: !current_game.favorite?)
     elsif params[:commit] == update_text
       CommitEligibility.new(params[:eligibility]).call

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   get '/', to: 'games#index', as: 'root'
 
-  resources :teams, only: [:index, :show, :update] do
+  resources :teams, only: [:index, :update] do
+    member do
+      get :last_game
+    end
     collection do
       post 'refresh'
     end

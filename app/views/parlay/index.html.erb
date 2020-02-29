@@ -1,7 +1,9 @@
+<%= render 'shared/nav' %>
+
 <%= form_with(url: parlay_index_path) do %>
   <%= submit_tag %>
   <hr />
-  <dl class="left-side">
+  <dl class="block">
     <dd>
       <h3>Weighted Round Robin</h3>
     </dd>
@@ -10,28 +12,28 @@
       <%= text_field_tag :num_teams, nil, value: @parlay.num_teams %>
     </dd>
     <dd>
-      <%= text_area_tag :top_teams, @parlay.top_teams.join("\n"), placeholder: 'Top Teams' %>
+      <%= text_area_tag :top_teams, @parlay.top_teams.join("\n"), placeholder: 'Top Teams', class: 'top_teams' %>
     </dd>
     <dd>
       <%= label_tag :max_occurrences, 'Max Occurrences', title: 'Max times a team can be used in the round robin' %>
       <%= text_field_tag :max_occurrences, nil, value: @parlay.max_occurrences %>
     </dd>
     <dd>
-      <%= text_area_tag :middle_teams, @parlay.middle_teams.join("\n"), placeholder: 'Middle Teams' %>
+      <%= text_area_tag :middle_teams, @parlay.middle_teams.join("\n"), placeholder: 'Middle Teams', class: 'middle_teams' %>
     </dd>
     <dd>
       <%= label_tag :middle_occurrences, 'Max Occurrences', title: 'Max times a specific middle team can be used in the round robin' %>
       <%= text_field_tag :middle_occurrences, nil, value: @parlay.middle_occurrences %>
     </dd>
     <dd>
-      <%= text_area_tag :bottom_teams, @parlay.bottom_teams.join("\n"), placeholder: 'Bottom Teams' %>
+      <%= text_area_tag :bottom_teams, @parlay.bottom_teams.join("\n"), placeholder: 'Bottom Teams', class: 'bottom_teams' %>
     </dd>
     <dd>
       <%= label_tag :bottom_occurrences, 'Max Occurrences', title: 'Max times a specific bottom team can be used in the round robin' %>
       <%= text_field_tag :bottom_occurrences, nil, value: @parlay.bottom_occurrences %>
     </dd>
   </dl>
-  <dl class="right-side">
+  <dl class="block">
     <dd>
       <h3>Results:</h3>
       <p><%= "Max bets: #{(pick_occurrences / @parlay.num_teams).to_i}" %></p>
@@ -41,7 +43,7 @@
         <% parlays.each do |parlay| %>
             <tr>
               <% parlay.each do |team| %>
-                <td><%= team %></td>
+                <td class="<%= weight_class(team) %>"><%= team %></td>
               <% end %>
             </tr>
         <% end %>

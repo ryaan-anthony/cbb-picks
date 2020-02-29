@@ -24,21 +24,31 @@ textarea{
     width: 254px;
     height: 200px
 }
-.left-side{
-    float: left;
-    width: 300px;
-    display:inline-block;
-}
-.right-side{
-    float: left;
-    width: 600px;
-    display:inline-block;
+nav {
+    float:right;
 }
 table {
     border-collapse: collapse;
 }
 
+tr:hover {
+    background-color: #ffff99;
+}
+
 table, th, td {
     border: 1px solid black;
     padding: 5px;
+}
+.block {
+    display: inline-block;
+    vertical-align: top;
+}
+.top_teams {
+    background-color: rgba(110, 241, 68, 0.26);
+}
+.middle_teams {
+    background-color: rgba(134, 208, 255, 0.4);
+}
+.bottom_teams {
+    background-color: rgba(255, 171, 109, 0.25);
 }

@@ -15,7 +15,12 @@ class ImportPlayers
         field_goal_percent: player['total']['field_goals_pct'],
         two_point_percent: player['total']['two_points_pct'],
         three_point_percent: player['total']['three_points_pct'],
-        foul_percent: player['total']['free_throws_pct']
+        foul_percent: player['total']['free_throws_pct'],
+        rebounds: player['average']['rebounds'],
+        steals: player['average']['steals'],
+        blocks: player['average']['blocks'],
+        turnovers: player['average']['turnovers'],
+        personal_fouls: player['average']['personal_fouls']
       )
     end
   end

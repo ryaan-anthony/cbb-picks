@@ -1,5 +1,7 @@
+<%= render 'shared/nav' %>
+
 <%= form_with(url: action_game_path(current_game)) do %>
-    <%= submit_tag follow_text, name: :commit %>
+    <%= submit_tag follow_text(current_game), name: :commit %>
     <%= submit_tag refresh_text, name: :commit %>
     <%= submit_tag update_text, name: :commit %>
     <hr />
@@ -9,19 +11,37 @@
     <% current_game.teams.each do |team| %>
         <h4><%= team.name %></h4>
         <% ranking = team.rankings_for(current_game) %>
-        <dl>
-          <dd>Ranking: <%= ranking.try(:offensive_score) %></dd>
-          <dd>Top players: <%= ranking.try(:top_players) %></dd>
+        <div class="block">
+          <table>
+            <% team.rankings.each do |ranking| %>
+                <% next unless ranking.game %>
+                <tr>
+                  <td><%= ranking.game.played_at %></td>
+                  <td><%= ranking.offensive_score %></td>
+                </tr>
+            <% end %>
+          </table>
+        </div>
+
+        <dl class="block">
+          <dd>Offensive ranking: <%= ranking.try(:offensive_score) %></dd>
+          <dd>Top shooters: <%= ranking.try(:top_players) %></dd>
           <dd>2 point shooters: <%= ranking.try(:two_point_shooters) %></dd>
           <dd>3 point shooters: <%= ranking.try(:three_point_shooters) %></dd>
           <dd>Foul shooters: <%= ranking.try(:foul_shooters) %></dd>
+          <dd>--</dd>
+          <dd>Defensive ranking: <%= ranking.try(:defensive_score) %></dd>
+          <dd>Rebounders: <%= ranking.try(:top_rebounders) %></dd>
+          <dd>Top defenders: <%= ranking.try(:top_defenders) %></dd>
+          <dd>Sloppy players: <%= ranking.try(:sloppy_players) %></dd>
         </dl>
-        <dl>
+
+        <dl class="block">
           <% team.top_players.each do |player| %>
-            <dd>
-              <%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %>
-              <%= label_tag player.id, player.name %>
-            </dd>
+              <dd>
+                <%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %>
+                <%= label_tag player.id, player.name %>
+              </dd>
           <% end %>
         </dl>
     <% end %>
