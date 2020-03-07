@@ -13,7 +13,7 @@
       <tr>
         <td><%= team.last_offensive_score %></td>
         <td><%= team.last_defensive_score %></td>
-        <td><%= team.name %> (<%= team.rank %>)</td>
+        <td><%= render partial: 'shared/team/name', locals: { team: team } %></td>
         <td>
           <%= link_to 'Last Game', last_game_team_path(team) %>
         </td>

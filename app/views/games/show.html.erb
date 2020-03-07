@@ -21,20 +21,8 @@
     </p>
 
     <% current_game.teams.each do |team| %>
-        <h4><%= team.name %> (<%= team.rank %>)</h4>
+        <h4><%= render partial: 'shared/team/name', locals: { team: team } %></h4>
         <% ranking = team.rankings_for(current_game) %>
-        <div class="block">
-          <table>
-            <% team.rankings.each do |ranking| %>
-                <% next unless ranking.game %>
-                <tr>
-                  <td><%= ranking.game.played_at %></td>
-                  <td><%= ranking.offensive_score %></td>
-                </tr>
-            <% end %>
-          </table>
-        </div>
-
         <div class="block">
           <table>
             <tr>
@@ -94,7 +82,7 @@
               <td class="<%= team.away_win_percent? ? 'hot_stat' : ''%>"><%= team.away_wins %>/<%= team.away_losses %></td>
               <td class="<%= team.neut_win_percent? ? 'hot_stat' : ''%>"><%= team.neut_wins %>/<%= team.neut_losses %></td>
               <% team.opponents.each do |opponent| %>
-                  <td><%= opponent.wins %>/<%= opponent.losses %></td>
+                  <td class="<%= opponent.win_percent? ? 'hot_stat' : ''%>"><%= opponent.wins %>/<%= opponent.losses %></td>
               <% end %>
             </tr>
           </table>

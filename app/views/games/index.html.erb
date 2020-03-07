@@ -13,16 +13,13 @@
 
 <hr />
 
-<h3>Games for <%= game_day %>:</h3>
-
-<div>Games: <%= todays_games.count %></div>
+<h3>Games for <%= game_day %></h3>
 
 <table>
   <% filtered_games.each do |game| %>
       <tr class="<%= game.favorite? ? 'favorite_game' : '' %>">
         <td><%= link_to 'view', game_path(game) %></td>
         <td><%= game.scheduled_at %></td>
-        <td><%= game.conference_game? ? 'conf' : '' %></td>
         <td>
           <%= render partial: 'shared/team/name', locals: { team: game.away_team } %>
           vs
@@ -36,3 +33,4 @@
       </tr>
   <% end %>
 </table>
+<%= todays_games.count %> total

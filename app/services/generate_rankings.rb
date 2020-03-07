@@ -26,14 +26,14 @@ class GenerateRankings
   private
 
   def defensive_score(team)
-    ((((team.defenders.count / 5.0) * 100).to_i +
-      ((team.rebounders.count / 5.0) * 100).to_i) / 200.0) * 100
+    (((100 - ((team.sloppy_players.count / 5.0) * 100).to_i) +
+      ((team.defenders.count / 5.0) * 100).to_i +
+      ((team.rebounders.count / 5.0) * 100).to_i) / 300.0) * 100
   end
 
   def offensive_score(team)
-    ((((team.eligible_players.count / 5.0) * 100).to_i +
-      ((team.shooters_2.count / 5.0) * 100).to_i +
+    ((((team.shooters_2.count / 5.0) * 100).to_i +
       ((team.shooters_3.count / 5.0) * 100).to_i +
-      ((team.shooters_foul.count / 5.0) * 100).to_i) / 400.0) * 100
+      ((team.shooters_foul.count / 5.0) * 100).to_i) / 300.0) * 100
   end
 end
