@@ -20,6 +20,14 @@ class Player
   scope :eligible, -> { where(eligible: true) }
 
   def ft_height
-    '%5.2f' % (height / 12.0)
+    "#{height / 12}' #{height % 12}\"" rescue '-'
+  end
+
+  def big_boy?
+    weight >= 220 rescue false
+  end
+
+  def tall?
+    height >= 78 rescue false
   end
 end

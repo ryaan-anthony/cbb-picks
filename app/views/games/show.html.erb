@@ -63,8 +63,8 @@
                   <td><%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %></td>
                   <td><%= label_tag player.id, player.name %></td>
                   <td><%= player.experience %></td>
-                  <td><%= player.ft_height %></td>
-                  <td><%= player.weight %></td>
+                  <td class="<%= player.tall? ? 'hot_stat' : ''%>"><%= player.ft_height %></td>
+                  <td class="<%= player.big_boy? ? 'hot_stat' : ''%>"><%= player.weight %></td>
                 </tr>
             <% end %>
           </table>

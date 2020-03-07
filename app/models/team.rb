@@ -80,7 +80,7 @@ class Team
 
   def top_players_by_experience
     top_players.sort_by do |player|
-      %w[GR SR JR SO FR].index(player.experience)
+      Settings::EXPERIENCES.index(player.experience)
     end
   end
 

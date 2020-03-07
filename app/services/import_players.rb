@@ -23,7 +23,6 @@ class ImportPlayers
         personal_fouls: player_data['average']['personal_fouls']
       )
     end
-    return if team.players.first.height.present?
     SportsRadar.team_profile(team.id)['players'].each do |player_data|
       player = team.players.find(player_data['id'])
       player.update(

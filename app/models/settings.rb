@@ -12,4 +12,5 @@ module Settings
   HOME_WIN_PERCENT = 0.675
   AWAY_WIN_PERCENT = 0.675
   NEUT_WIN_PERCENT = 0.675
+  EXPERIENCES = %w[GR SR JR SO FR] + [nil]
 end
