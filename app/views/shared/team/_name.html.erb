@@ -1,0 +1,9 @@
+<% if team.present? %>
+  <span class="<%= team.favorite? ? 'favorite_team' : '' %>">
+    <%= team.name %>
+    <%= "(#{team.ap_rank})" if team.ap_rank? %>
+    <%= "[#{team.rank}]" if team.ranked? %>
+  </span>
+<% else %>
+    [TBD]
+<% end %>

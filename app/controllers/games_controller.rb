@@ -15,6 +15,11 @@ class GamesController < ApplicationController
   def show
   end
 
+  def refresh
+    todays_games.destroy_all
+    redirect_to root_path(game_day: game_day)
+  end
+
   def action
     if params[:commit] == follow_text(current_game)
       current_game.update(favorite: !current_game.favorite?)

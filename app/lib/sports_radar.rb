@@ -1,8 +1,26 @@
 class SportsRadar
   class << self
     def games(date = Date.current)
+      sleep(1.1) # trial api limits
       JsonApi::Response.new(
         request("ncaamb/trial/v7/en/games/#{date.year}/#{date.month}/#{date.day}/schedule.json")
+      )
+    end
+
+    def rankings
+      sleep(1.1) # trial api limits
+      year = '2019'
+      JsonApi::Response.new(
+        request("ncaamb/trial/v7/en/rpi/#{year}/rankings.json")
+      )
+    end
+
+    def ap_rankings
+      sleep(1.1) # trial api limits
+      year = '2019'
+      source = 'AP' # AP or US
+      JsonApi::Response.new(
+        request("ncaamb/trial/v7/en/polls/#{source}/#{year}/rankings.json")
       )
     end
 

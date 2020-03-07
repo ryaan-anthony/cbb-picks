@@ -1,10 +1,29 @@
 class Team
   include Mongoid::Document
   field :name
-  field :favorite, type: Boolean, default: false
+  field :rank, type: Integer, default: 0
+  field :ap_rank, type: Integer
+  field :wins, type: Integer
+  field :losses, type: Integer
+  field :home_wins, type: Integer
+  field :home_losses, type: Integer
+  field :away_wins, type: Integer
+  field :away_losses, type: Integer
+  field :neut_wins, type: Integer
+  field :neut_losses, type: Integer
   embeds_many :rankings, class_name: Ranking
   embeds_many :players, class_name: Player
+  embeds_many :opponents, class_name: Opponent
   validates :name, presence: true
+  accepts_nested_attributes_for :opponents
+
+  def ranked?
+    rank > 0 && rank <= 70
+  end
+
+  def favorite?
+    last_offensive_score >= 80 || last_defensive_score >= 70
+  end
 
   def last_offensive_score
     rankings.last.try(:offensive_score) || 0
@@ -20,6 +39,38 @@ class Team
 
   def rankings_for(game)
     rankings.where(game_id: game.id).first
+  end
+
+  def win_percent
+    wins.to_f / (wins.to_f + losses.to_f)
+  end
+
+  def home_win_percent
+    home_wins.to_f / (home_wins.to_f + home_losses.to_f)
+  end
+
+  def away_win_percent
+    away_wins.to_f / (away_wins.to_f + away_losses.to_f)
+  end
+
+  def neut_win_percent
+    neut_wins.to_f / (neut_wins.to_f + neut_losses.to_f)
+  end
+
+  def win_percent?
+    win_percent >= Settings::WIN_PERCENT
+  end
+
+  def home_win_percent?
+    home_win_percent >= Settings::HOME_WIN_PERCENT
+  end
+
+  def away_win_percent?
+    away_win_percent >= Settings::AWAY_WIN_PERCENT
+  end
+
+  def neut_win_percent?
+    neut_win_percent >= Settings::NEUT_WIN_PERCENT
   end
 
   def set_eligibility(player_ids)

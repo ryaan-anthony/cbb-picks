@@ -1,6 +1,11 @@
 <%= render 'shared/nav' %>
 
-<%= form_with(url: filter_games_path) do %>
+<%= form_with(url: refresh_games_path, class: 'block') do %>
+    <%= hidden_field_tag :game_day, game_day %>
+    <%= submit_tag('Refresh') %>
+<% end %>
+
+<%= form_with(url: filter_games_path, class: 'block') do %>
     <%= select_tag(:game_day, options_for_select(date_range, game_day)) %>
     <%= tag :input, name: :watching, type: :checkbox, value: 1, checked: params[:watching].presence %>
     <%= submit_tag('View') %>
@@ -14,12 +19,14 @@
 
 <table>
   <% filtered_games.each do |game| %>
-      <tr>
+      <tr class="<%= game.favorite? ? 'favorite_game' : '' %>">
         <td><%= link_to 'view', game_path(game) %></td>
+        <td><%= game.scheduled_at %></td>
+        <td><%= game.conference_game? ? 'conf' : '' %></td>
         <td>
-          <%= game.away_team.name %>
+          <%= render partial: 'shared/team/name', locals: { team: game.away_team } %>
           vs
-          <%= game.home_team.name %>
+          <%= render partial: 'shared/team/name', locals: { team: game.home_team } %>
         </td>
         <td>
           <%= form_with(url: action_game_path(game), html: { style: 'display:inline-block' }) do %>

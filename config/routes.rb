@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get :last_game
     end
     collection do
-      post 'refresh'
+      post :refresh
     end
   end
 
@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
     collection do
       post :filter
+      post :refresh
     end
   end
 end

@@ -9,7 +9,8 @@ class TeamsController < ApplicationController
   end
 
   def refresh
-    binding.pry
+    ImportRankings.new.call
+    redirect_to teams_path
   end
 
   def update

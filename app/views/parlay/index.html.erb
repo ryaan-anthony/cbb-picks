@@ -35,8 +35,11 @@
   </dl>
   <dl class="block">
     <dd>
-      <h3>Results:</h3>
-      <p><%= "Max bets: #{(pick_occurrences / @parlay.num_teams).to_i}" %></p>
+      <p>
+        <%= "Picks: #{@parlay.picks.count}" %>
+        |
+        <%= "Max bets: #{(pick_occurrences / @parlay.num_teams).to_i}" %>
+      </p>
     </dd>
     <dd>
       <table>
