@@ -12,113 +12,115 @@
       <%= current_game.scheduled_at %>
 
       <% if current_game.neutral_site? %>
-        (neut)
+          (neut)
       <% end %>
 
       <% if current_game.conference_game? %>
-        [conf]
+          [conf]
       <% end %>
     </p>
 
     <% current_game.teams.each do |team| %>
-        <h4><%= render partial: 'shared/team/name', locals: { team: team } %></h4>
-        <% ranking = team.rankings_for(current_game) %>
-        <section>
-          <table>
-            <tr>
-              <th colspan="2"></th>
-              <th>CLS</th>
-              <th>HT</th>
-              <th>WT</th>
-              <th>FG%</th>
-              <th>2P%</th>
-              <th>3P%</th>
-              <th>STL</th>
-              <th>BLK</th>
-              <th>RBD</th>
-            </tr>
-            <% team.top_players_by_experience.each do |player| %>
-                <tr>
-                  <td><%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %></td>
-                  <td><%= label_tag player.id, player.name %></td>
-                  <td><%= player.experience %></td>
-                  <td class="<%= player.tall? ? 'hot_stat' : ''%>"><%= player.ft_height %></td>
-                  <td class="<%= player.big_boy? ? 'hot_stat' : ''%>"><%= player.weight %></td>
-                  <td class="<%= player.field_goal_percent? ? 'hot_stat' : ''%>"><%= player.field_goal_percent %></td>
-                  <td class="<%= player.two_point_percent? ? 'hot_stat' : ''%>"><%= player.two_point_percent %></td>
-                  <td class="<%= player.three_point_percent? ? 'hot_stat' : ''%>"><%= player.three_point_percent %></td>
-                  <td class="<%= player.steals? ? 'hot_stat' : ''%>"><%= player.steals %></td>
-                  <td class="<%= player.blocks? ? 'hot_stat' : ''%>"><%= player.blocks %></td>
-                  <td class="<%= player.rebounder? ? 'hot_stat' : ''%>"><%= player.rebounds %></td>
-                </tr>
-            <% end %>
-          </table>
-        </section>
-
         <section class="block">
-          <table>
-            <tr>
-              <td>Record</td>
-              <td class="<%= team.win_percent? ? 'hot_stat' : ''%>"><%= team.wins %>/<%= team.losses %></td>
-            </tr>
-            <tr>
-              <td>Home</td>
-              <td class="<%= team.home_win_percent? ? 'hot_stat' : ''%>"><%= team.home_wins %>/<%= team.home_losses %></td>
-            </tr>
-            <tr>
-              <td>Away</td>
-              <td class="<%= team.away_win_percent? ? 'hot_stat' : ''%>"><%= team.away_wins %>/<%= team.away_losses %></td>
-            </tr>
-            <tr>
-              <td>Nuetral</td>
-              <td class="<%= team.neut_win_percent? ? 'hot_stat' : ''%>"><%= team.neut_wins %>/<%= team.neut_losses %></td>
-            </tr>
-          </table>
-        </section>
+          <h4><%= render partial: 'shared/team/name', locals: { team: team } %></h4>
+          <% ranking = team.rankings_for(current_game) %>
+          <section class="block">
+            <table>
+              <tr>
+                <td>Record</td>
+                <td class="<%= team.win_percent? ? 'hot_stat' : ''%>"><%= team.wins %>/<%= team.losses %></td>
+              </tr>
+              <tr>
+                <td>Home</td>
+                <td class="<%= team.home_win_percent? ? 'hot_stat' : ''%>"><%= team.home_wins %>/<%= team.home_losses %></td>
+              </tr>
+              <tr>
+                <td>Away</td>
+                <td class="<%= team.away_win_percent? ? 'hot_stat' : ''%>"><%= team.away_wins %>/<%= team.away_losses %></td>
+              </tr>
+              <tr>
+                <td>Nuetral</td>
+                <td class="<%= team.neut_win_percent? ? 'hot_stat' : ''%>"><%= team.neut_wins %>/<%= team.neut_losses %></td>
+              </tr>
+            </table>
+          </section>
 
-        <section class="block">
-          <table>
-            <% team.opponents.each do |opponent| %>
-                <tr>
-                  <td><%= opponent.rank %></td>
-                  <td class="<%= opponent.win_percent? ? 'hot_stat' : ''%>"><%= opponent.wins %>/<%= opponent.losses %></td>
-                </tr>
-            <% end %>
-          </table>
-        </section>
+          <section class="block">
+            <table>
+              <% team.opponents.each do |opponent| %>
+                  <tr>
+                    <td><%= opponent.rank %></td>
+                    <td class="<%= opponent.win_percent? ? 'hot_stat' : ''%>"><%= opponent.wins %>/<%= opponent.losses %></td>
+                  </tr>
+              <% end %>
+            </table>
+          </section>
 
-        <section class="block">
-          <table>
-            <tr>
-              <td>Offensive ranking</td><td><%= ranking.try(:offensive_score) || '--' %></td>
-            </tr>
-            <tr class="key_metrics">
-              <td>2 point shooters</td><td><%= ranking.try(:two_point_shooters) || '--' %></td>
-            </tr>
-            <tr class="key_metrics">
-              <td>3 point shooters</td><td><%= ranking.try(:three_point_shooters) || '--' %></td>
-            </tr>
-            <tr>
-              <td>Foul shooters</td><td><%= ranking.try(:foul_shooters) || '--' %></td>
-            </tr>
-          </table>
-        </section>
+          <section class="block">
+            <table>
+              <tr>
+                <td>Offensive ranking</td><td><%= ranking.try(:offensive_score) || '--' %></td>
+              </tr>
+              <tr class="key_metrics">
+                <td>2 point shooters</td><td><%= ranking.try(:two_point_shooters) || '--' %></td>
+              </tr>
+              <tr class="key_metrics">
+                <td>3 point shooters</td><td><%= ranking.try(:three_point_shooters) || '--' %></td>
+              </tr>
+              <tr>
+                <td>Foul shooters</td><td><%= ranking.try(:foul_shooters) || '--' %></td>
+              </tr>
+            </table>
+          </section>
 
-        <section class="block">
-          <table>
-            <tr>
-              <td>Defensive ranking</td><td><%= ranking.try(:defensive_score) || '--' %></td>
-            </tr>
-            <tr class="key_metrics">
-              <td>Top defenders</td><td><%= ranking.try(:top_defenders) || '--' %></td>
-            </tr>
-            <tr class="key_metrics">
-              <td>Rebounders</td><td><%= ranking.try(:top_rebounders) || '--' %></td>
-            </tr>
-            <tr>
-              <td>Sloppy players</td><td><%= ranking.try(:sloppy_players) || '--' %></td>
-            </tr>
-          </table>
+          <section class="block">
+            <table>
+              <tr>
+                <td>Defensive ranking</td><td><%= ranking.try(:defensive_score) || '--' %></td>
+              </tr>
+              <tr class="key_metrics">
+                <td>Top defenders</td><td><%= ranking.try(:top_defenders) || '--' %></td>
+              </tr>
+              <tr class="key_metrics">
+                <td>Rebounders</td><td><%= ranking.try(:top_rebounders) || '--' %></td>
+              </tr>
+              <tr>
+                <td>Sloppy players</td><td><%= ranking.try(:sloppy_players) || '--' %></td>
+              </tr>
+            </table>
+          </section>
+
+          <section>
+            <table>
+              <tr>
+                <th colspan="2"></th>
+                <th>CLS</th>
+                <th>HT</th>
+                <th>WT</th>
+                <th>FG%</th>
+                <th>2P%</th>
+                <th>3P%</th>
+                <th>STL</th>
+                <th>BLK</th>
+                <th>RBD</th>
+              </tr>
+              <% team.top_players_by_experience.each do |player| %>
+                  <tr>
+                    <td><%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %></td>
+                    <td><%= label_tag player.id, player.name %></td>
+                    <td><%= player.experience %></td>
+                    <td class="<%= player.tall? ? 'hot_stat' : ''%>"><%= player.ft_height %></td>
+                    <td class="<%= player.big_boy? ? 'hot_stat' : ''%>"><%= player.weight %></td>
+                    <td class="<%= player.field_goal_percent? ? 'hot_stat' : ''%>"><%= player.field_goal_percent %></td>
+                    <td class="<%= player.two_point_percent? ? 'hot_stat' : ''%>"><%= player.two_point_percent %></td>
+                    <td class="<%= player.three_point_percent? ? 'hot_stat' : ''%>"><%= player.three_point_percent %></td>
+                    <td class="<%= player.steals? ? 'hot_stat' : ''%>"><%= player.steals %></td>
+                    <td class="<%= player.blocks? ? 'hot_stat' : ''%>"><%= player.blocks %></td>
+                    <td class="<%= player.rebounder? ? 'hot_stat' : ''%>"><%= player.rebounds %></td>
+                  </tr>
+              <% end %>
+            </table>
+          </section>
         </section>
     <% end %>
 <% end %>
