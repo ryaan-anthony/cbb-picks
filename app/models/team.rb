@@ -21,8 +21,8 @@ class Team
     rank > 0 && rank <= 70
   end
 
-  def favorite?
-    last_offensive_score >= 80 || last_defensive_score >= 70
+  def hot?
+    last_offensive_score >= 70 || last_defensive_score >= 70
   end
 
   def last_offensive_score
@@ -76,6 +76,12 @@ class Team
   def set_eligibility(player_ids)
     players.update_all(eligible: false)
     players.where(:id.in => player_ids).update_all(eligible: true)
+  end
+
+  def top_players_by_experience
+    top_players.sort_by do |player|
+      %w[GR SR JR SO FR].index(player.experience)
+    end
   end
 
   def top_players

@@ -56,14 +56,19 @@
           </table>
         </div>
 
-        <dl class="block">
-          <% team.top_players.each do |player| %>
-              <dd>
-                <%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %>
-                <%= label_tag player.id, player.name %>
-              </dd>
-          <% end %>
-        </dl>
+        <div class="block">
+          <table>
+            <% team.top_players_by_experience.each do |player| %>
+                <tr>
+                  <td><%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %></td>
+                  <td><%= label_tag player.id, player.name %></td>
+                  <td><%= player.experience %></td>
+                  <td><%= player.ft_height %></td>
+                  <td><%= player.weight %></td>
+                </tr>
+            <% end %>
+          </table>
+        </div>
 
         <section>
           <table>

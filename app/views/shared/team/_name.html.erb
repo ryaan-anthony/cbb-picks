@@ -1,5 +1,5 @@
 <% if team.present? %>
-  <span class="<%= team.favorite? ? 'favorite_team' : '' %>">
+  <span class="<%= team.hot? ? 'hot_team' : '' %>">
     <%= team.name %>
     <%= "(#{team.ap_rank})" if team.ap_rank? %>
     <%= "[#{team.rank}]" if team.ranked? %>

@@ -24,12 +24,19 @@ class SportsRadar
       )
     end
 
-    def team(team_id)
+    def team_statistics(team_id)
       sleep(1.1) # trial api limits
       year = '2019'
       season = 'REG' # Conference Tournament (CT), Regular Season (REG), or Postseason (PST).
       JsonApi::Response.new(
         request("ncaamb/trial/v7/en/seasons/#{year}/#{season}/teams/#{team_id}/statistics.json")
+      )
+    end
+
+    def team_profile(team_id)
+      sleep(1.1) # trial api limits
+      JsonApi::Response.new(
+        request("ncaamb/trial/v7/en/teams/#{team_id}/profile.json")
       )
     end
 

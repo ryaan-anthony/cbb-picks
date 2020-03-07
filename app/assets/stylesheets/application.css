@@ -55,7 +55,7 @@ table, th, td {
 .bottom_teams {
     background-color: rgba(255, 171, 109, 0.25);
 }
-.favorite_team {
+.hot_team {
     font-weight: bold;
 }
 .favorite_game {

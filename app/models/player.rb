@@ -13,6 +13,13 @@ class Player
   field :blocks, type: Float
   field :turnovers, type: Float
   field :personal_fouls, type: Float
+  field :height, type: Integer
+  field :weight, type: Integer
+  field :experience
   embedded_in :team, class_name: Team
   scope :eligible, -> { where(eligible: true) }
+
+  def ft_height
+    '%5.2f' % (height / 12.0)
+  end
 end

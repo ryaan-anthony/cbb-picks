@@ -1,5 +1,10 @@
 class ImportRankings
   def call
+    Team.all.each do |team|
+      team.rankings.each do |ranking|
+        ranking.delete unless ranking.valid?
+      end
+    end
     SportsRadar.rankings['rankings'].each do |team_data|
       team = Team.find(team_data['id'])
       team.opponents = []
