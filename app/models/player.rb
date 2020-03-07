@@ -20,7 +20,7 @@ class Player
   scope :eligible, -> { where(eligible: true) }
 
   def ft_height
-    "#{height / 12}' #{height % 12}\"" rescue '-'
+    "#{height / 12}' #{height % 12}\"" rescue nil
   end
 
   def big_boy?
@@ -29,5 +29,37 @@ class Player
 
   def tall?
     height >= 78 rescue false
+  end
+
+  def defender?
+    steals? || blocks?
+  end
+
+  def shooter_2?
+    field_goal_percent? || two_point_percent?
+  end
+
+  def field_goal_percent?
+    field_goal_percent >= Settings::TWO_POINT_AVERAGE
+  end
+
+  def two_point_percent?
+    two_point_percent >= Settings::TWO_POINT_AVERAGE
+  end
+
+  def three_point_percent?
+    three_point_percent >= Settings::THREE_POINT_AVERAGE
+  end
+
+  def blocks?
+    blocks >= Settings::BLOCK_AVERAGE
+  end
+
+  def steals?
+    steals >= Settings::STEAL_AVERAGE
+  end
+
+  def rebounder?
+    rebounds >= Settings::REBOUND_AVERAGE
   end
 end

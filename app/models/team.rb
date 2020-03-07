@@ -102,29 +102,19 @@ class Team
   end
 
   def rebounders
-    eligible_players.select do |player|
-      player.rebounds >= Settings::REBOUND_AVERAGE
-    end
+    eligible_players.select(&:rebounder?)
   end
 
   def defenders
-    eligible_players.select do |player|
-      player.steals >= Settings::STEAL_AVERAGE ||
-        player.blocks >= Settings::BLOCK_AVERAGE
-    end
+    eligible_players.select(&:defender?)
   end
 
   def shooters_2
-    eligible_players.select do |player|
-      player.field_goal_percent >= Settings::TWO_POINT_AVERAGE ||
-        player.two_point_percent >= Settings::TWO_POINT_AVERAGE
-    end
+    eligible_players.select(&:shooter_2?)
   end
 
   def shooters_3
-    eligible_players.select do |player|
-      player.three_point_percent >= Settings::THREE_POINT_AVERAGE
-    end
+    eligible_players.select(&:three_point_percent?)
   end
 
   def shooters_foul

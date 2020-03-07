@@ -8,7 +8,7 @@ module GamesHelper
   end
 
   def date_range
-    (2.days.ago.to_date)..(2.days.from_now.to_date)
+    (4.days.ago.to_date)..(4.days.from_now.to_date)
   end
 
   def todays_games
