@@ -3,6 +3,7 @@ class Team
   field :name
   field :rank, type: Integer, default: 0
   field :ap_rank, type: Integer
+  field :r_rank, type: Integer
   field :wins, type: Integer
   field :losses, type: Integer
   field :home_wins, type: Integer
@@ -16,6 +17,14 @@ class Team
   embeds_many :opponents, class_name: Opponent
   validates :name, presence: true
   accepts_nested_attributes_for :opponents
+
+  def self.by_rank
+    all.sort_by { |team| team.last_offensive_score }.reverse
+  end
+
+  def r_ranked?
+    r_rank > 0 && r_rank <= 70
+  end
 
   def ranked?
     rank > 0 && rank <= 70

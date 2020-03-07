@@ -3,6 +3,7 @@
     <%= team.name %>
     <%= "(#{team.ap_rank})" if team.ap_rank? %>
     <%= "[#{team.rank}]" if team.ranked? %>
+    <%= "(R#{team.r_rank})" if team.r_ranked? %>
   </span>
 <% else %>
     [TBD]

@@ -25,5 +25,8 @@ class ImportRankings
       team = Team.find(team_data['id'])
       team.update(ap_rank: team_data['rank'])
     end
+    Team.by_rank.each_with_index do |team, index|
+      team.update(r_rank: index + 1)
+    end
   end
 end

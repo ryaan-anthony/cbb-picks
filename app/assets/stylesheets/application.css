@@ -66,3 +66,9 @@ table, th, td {
 .hot_stat {
     background-color: rgba(215, 68, 71, 0.25);
 }
+.ineligible {
+    color: #bababc;
+}
+.ineligible .hot_stat {
+    background-color: rgba(244, 76, 79, 0.1);
+}

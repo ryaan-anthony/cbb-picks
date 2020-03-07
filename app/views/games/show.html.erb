@@ -105,7 +105,7 @@
                 <th>RBD</th>
               </tr>
               <% team.top_players_by_experience.each do |player| %>
-                  <tr>
+                  <tr class="<%= player.eligible? ? '' : 'ineligible' %>">
                     <td><%= tag :input, id: player.id, name: "eligibility[#{team.id}][#{player.id}]", type: :checkbox, value: 1, checked: player.eligible %></td>
                     <td><%= label_tag player.id, player.name %></td>
                     <td><%= player.experience %></td>

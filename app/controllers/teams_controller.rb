@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:last_game]
   def index
-    @teams = Team.all.sort_by { |team| team.last_offensive_score }.reverse
+    @teams = Team.by_rank
   end
 
   def last_game
