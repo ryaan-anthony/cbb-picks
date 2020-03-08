@@ -1,6 +1,7 @@
 module JsonApi
   class Response
     delegate :[], to: :body
+    delegate :each, to: :body
     attr_reader :response
 
     def initialize(response)

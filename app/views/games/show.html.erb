@@ -121,6 +121,21 @@
               <% end %>
             </table>
           </section>
+
+          <section>
+            <table>
+              <% if team.injuries.blank? %>
+                <tr><td>No reported injuries</td></tr>
+              <% end %>
+              <% team.injuries.each do |injury_report| %>
+                  <tr>
+                    <td><%= injury_report.player %></td>
+                    <td><%= injury_report.injury %></td>
+                    <td><%= injury_report.status %></td>
+                  </tr>
+              <% end %>
+            </table>
+          </section>
         </section>
     <% end %>
 <% end %>

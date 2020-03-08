@@ -1,6 +1,7 @@
 class Team
   include Mongoid::Document
   field :name
+  field :market
   field :rank, type: Integer, default: 0
   field :ap_rank, type: Integer
   field :r_rank, type: Integer
@@ -15,6 +16,7 @@ class Team
   embeds_many :rankings, class_name: Ranking
   embeds_many :players, class_name: Player
   embeds_many :opponents, class_name: Opponent
+  embeds_many :injuries, class_name: InjuryReport
   validates :name, presence: true
   accepts_nested_attributes_for :opponents
 
