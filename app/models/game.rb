@@ -1,5 +1,8 @@
 class Game
   include Mongoid::Document
+  field :status
+  field :home_points, type: Integer
+  field :away_points, type: Integer
   field :favorite, type: Boolean, default: false
   field :played_at, type: Date
   field :scheduled_at

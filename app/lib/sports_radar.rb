@@ -1,5 +1,14 @@
 class SportsRadar
   class << self
+    def game_results
+      sleep(1.1) # trial api limits
+      year = '2019'
+      season = 'REG' # Conference Tournament (CT), Regular Season (REG), or Postseason (PST).
+      JsonApi::Response.new(
+        request("ncaamb/trial/v7/en/games/#{year}/#{season}/schedule.json")
+      )
+    end
+
     def games(date = Date.current)
       sleep(1.1) # trial api limits
       JsonApi::Response.new(
